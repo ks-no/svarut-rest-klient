@@ -120,4 +120,27 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public SigneringsHistorikk retrieveSigneringsHistorikk(ForsendelsesId forsendelseId){
+        return retrieveSigneringsHistorikk(forsendelseId.getId());
+    }
+
+    @Override
+    public SigneringsHistorikk retrieveSigneringsHistorikk(UUID forsendelseId){
+        final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelseId + "/signeringhistorikk");
+        addAuth(request);
+        try {
+            final ContentResponse send = request.send();
+            if(send.getStatus() == 404) return null;
+            if(send.getStatus() == 200)
+                return objectMapper.readValue(send.getContentAsString(), SigneringsHistorikk.class);
+            else {
+                log.error("Failed to get signeringhistorikk {}: {} ", send.getStatus(), send.getContentAsString());
+                throw new RuntimeException("Error getting signeringhistorikk response code " + send.getStatus());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

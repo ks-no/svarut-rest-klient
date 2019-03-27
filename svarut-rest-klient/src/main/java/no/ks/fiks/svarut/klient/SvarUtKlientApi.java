@@ -1,9 +1,6 @@
 package no.ks.fiks.svarut.klient;
 
-import no.ks.fiks.svarut.klient.model.Forsendelse;
-import no.ks.fiks.svarut.klient.model.ForsendelseStatus;
-import no.ks.fiks.svarut.klient.model.ForsendelsesHistorikk;
-import no.ks.fiks.svarut.klient.model.ForsendelsesId;
+import no.ks.fiks.svarut.klient.model.*;
 
 import java.util.UUID;
 
@@ -16,4 +13,8 @@ public interface SvarUtKlientApi {
     ForsendelsesHistorikk retrieveForsendelsesHistorikk(ForsendelsesId forsendelseId);
 
     ForsendelsesHistorikk retrieveForsendelsesHistorikk(UUID forsendelseId);
+
+    SigneringsHistorikk retrieveSigneringsHistorikk(ForsendelsesId forsendelseId);
+
+    SigneringsHistorikk retrieveSigneringsHistorikk(UUID forsendelseId);
 }
