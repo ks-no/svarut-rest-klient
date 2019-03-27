@@ -1,5 +1,6 @@
 package no.ks.fiks.svarut.klient.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,15 +13,11 @@ import java.util.TreeSet;
 @Builder
 public class Dokument {
 
-    @XmlElement(required = true)
     private String filnavn;
-    @XmlElement(required = true)
     private String mimeType;
-    @XmlElement(required = true)
     private Boolean skalSigneres;
     private String dokumentType;
-    @XmlElement(required = true)
-    @XmlMimeType("application/octet-stream")
+    @JsonIgnore
     private DataHandler data;
     private TreeSet<Integer> giroarkSider;
     private boolean ekskluderesFraUtskrift;

@@ -17,7 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @SuppressWarnings("checkstyle:hideutilityclassconstructor")
-public class ForsendelsesStatus {
+public class ForsendelseStatus {
 
     private ForsendelsesId forsendelsesId;
     private Date sisteStatusEndring;

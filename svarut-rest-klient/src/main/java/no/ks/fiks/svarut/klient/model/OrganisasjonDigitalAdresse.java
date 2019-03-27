@@ -9,8 +9,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType
-@XmlAccessorType(XmlAccessType.FIELD)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,5 +16,5 @@ import javax.xml.bind.annotation.XmlType;
 @SuppressWarnings("checkstyle:hideutilityclassconstructor")
 public class OrganisasjonDigitalAdresse extends DigitalAdresse {
 
-    private OrganisasjonsNummer organisasjonsNummer;
+    private String organisasjonsNummer;
 }

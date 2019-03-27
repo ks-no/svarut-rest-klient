@@ -13,8 +13,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-@XmlType
-@XmlAccessorType(XmlAccessType.FIELD)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,7 +23,7 @@ public class Forsendelse {
     private Adresse mottaker;
     private Set<DigitalAdresse> eksponertFor;
     private String avgivendeSystem;
-    @XmlElement(required = true)
+
     private String tittel;
     private String konteringsKode;
     private boolean kunDigitalLevering;
@@ -41,8 +39,8 @@ public class Forsendelse {
     private String forsendelsesType;
     private String eksternReferanse;
     private boolean svarPaForsendelseLink;
-    @XmlElement(required = true, nillable = true)
+
     private Date signeringUtloper;
-    @XmlElement(required = true, nillable = true)
+
     private SignaturType signaturType;
 }

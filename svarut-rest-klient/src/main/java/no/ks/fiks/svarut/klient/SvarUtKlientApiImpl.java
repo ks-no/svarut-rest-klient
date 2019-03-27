@@ -1,20 +1,23 @@
 package no.ks.fiks.svarut.klient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.ks.fiks.svarut.klient.model.Forsendelse;
-import no.ks.fiks.svarut.klient.model.Status;
+import lombok.extern.slf4j.Slf4j;
+import no.ks.fiks.svarut.klient.model.*;
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.Authentication;
-import org.eclipse.jetty.client.api.AuthenticationStore;
 import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Request;
-import org.eclipse.jetty.client.util.*;
+import org.eclipse.jetty.client.util.BasicAuthentication;
+import org.eclipse.jetty.client.util.InputStreamContentProvider;
+import org.eclipse.jetty.client.util.MultiPartContentProvider;
+import org.eclipse.jetty.client.util.StringContentProvider;
+import org.eclipse.jetty.http.HttpMethod;
 
-import java.io.InputStream;
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class SvarUtKlientApiImpl implements SvarUtKlientApi {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private String baseUrl;
@@ -38,48 +41,52 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
         this.client = client;
         this.username = username;
         this.password = password;
-        AuthenticationStore auth = client.getAuthenticationStore();
+        /*AuthenticationStore auth = client.getAuthenticationStore();
         URI uri = URI.create(baseUrl);
-        auth.addAuthenticationResult(new BasicAuthentication.BasicResult(uri, username, password));
+        auth.addAuthenticationResult(new BasicAuthentication.BasicResult(uri, username, password));*/
     }
 
     @Override
-    public String sendForsendelse(Forsendelse forsendelse, List<InputStream> filer) {
+    public ForsendelsesId sendForsendelse(Forsendelse forsendelse) {
         try {
             MultiPartContentProvider multipart = new MultiPartContentProvider();
             multipart.addFieldPart("forsendelse", new StringContentProvider(objectMapper.writeValueAsString(forsendelse)), null);
-            multipart.addFilePart("filer", "filnavn", new InputStreamContentProvider(filer.get(0)), null);
-            multipart.close();
-
-            InputStreamResponseListener listener = new InputStreamResponseListener();
-            /*newUploadRequest()
-                    .method(HttpMethod.POST)
-                    .path(pathHandler.getUploadPath(fiksOrganisasjonId, kontoId))
-                    .param("kryptert", String.valueOf(kryptert))
-                    .content(multipart)
-                    .send(listener);
-
-            Response response = listener.get(1, TimeUnit.HOURS);
-            if (isError(response.getStatus())) {
-                int status = response.getStatus();
-                String content = IOUtils.toString(listener.getInputStream(), StandardCharsets.UTF_8);
-                throw new DokumentlagerHttpException(String.format("HTTP-feil under opplasting (%d): %s", status, content), status, content);
+            for (Dokument dokument : forsendelse.getDokumenter()) {
+                multipart.addFilePart("filer", dokument.getFilnavn(), new InputStreamContentProvider(dokument.getData().getInputStream()), null);
             }
 
-            return buildResponse(response, objectMapper.readValue(listener.getInputStream(), DokumentMetadataUploadResult.class));*/
-            return "";
+            multipart.close();
+
+            final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/sendForsendelse");
+            addAuth(request);
+            request.content(multipart);
+            request.method(HttpMethod.POST);
+            request.idleTimeout(16, TimeUnit.MINUTES);
+            final ContentResponse send = request.send();
+
+            if (send.getStatus() != 200) {
+                throw new RuntimeException("Send failed " +  send.getStatus() + " : " + send.getContentAsString());
+            } else {
+                return objectMapper.readValue(send.getContentAsString(), ForsendelsesId.class);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public Status hentStatus(UUID forsendelseId) {
-        final Request request = client.newRequest(baseUrl + "/forsendelse/v1/" + forsendelseId + "/status");
+    public ForsendelseStatus hentStatus(UUID forsendelseId) {
+        final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelseId + "/status");
         addAuth(request);
         try {
             final ContentResponse send = request.send();
-            return Status.fromValue(send.getContentAsString());
+            if(send.getStatus() == 404) return null;
+            if(send.getStatus() == 200)
+                return objectMapper.readValue(send.getContentAsString(), ForsendelseStatus.class);
+            else {
+                log.error("Failed to get status {}: {} ", send.getStatus(), send.getContentAsString());
+                throw new RuntimeException("Error getting status resposne code " + send.getStatus());
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -89,5 +96,28 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
         URI uri = URI.create(baseUrl);
         Authentication.Result authn = new BasicAuthentication.BasicResult(uri, username, password);
         authn.apply(request);
+    }
+
+    @Override
+    public ForsendelsesHistorikk retrieveForsendelsesHistorikk(ForsendelsesId forsendelseId){
+        return retrieveForsendelsesHistorikk(forsendelseId.getId());
+    }
+
+    @Override
+    public ForsendelsesHistorikk retrieveForsendelsesHistorikk(UUID forsendelseId){
+        final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelseId + "/historikk");
+        addAuth(request);
+        try {
+            final ContentResponse send = request.send();
+            if(send.getStatus() == 404) return null;
+            if(send.getStatus() == 200)
+                return objectMapper.readValue(send.getContentAsString(), ForsendelsesHistorikk.class);
+            else {
+                log.error("Failed to get historikk {}: {} ", send.getStatus(), send.getContentAsString());
+                throw new RuntimeException("Error getting historikk resposne code " + send.getStatus());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

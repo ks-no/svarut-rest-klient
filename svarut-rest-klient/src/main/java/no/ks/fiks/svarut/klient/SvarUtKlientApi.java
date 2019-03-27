@@ -1,15 +1,19 @@
 package no.ks.fiks.svarut.klient;
 
 import no.ks.fiks.svarut.klient.model.Forsendelse;
-import no.ks.fiks.svarut.klient.model.Status;
+import no.ks.fiks.svarut.klient.model.ForsendelseStatus;
+import no.ks.fiks.svarut.klient.model.ForsendelsesHistorikk;
+import no.ks.fiks.svarut.klient.model.ForsendelsesId;
 
-import java.io.InputStream;
-import java.util.List;
 import java.util.UUID;
 
 public interface SvarUtKlientApi {
 
-    public String sendForsendelse(Forsendelse forsendelse, List<InputStream> filer);
+    public ForsendelsesId sendForsendelse(Forsendelse forsendelse);
 
-    public Status hentStatus(UUID forsendelseId);
+    public ForsendelseStatus hentStatus(UUID forsendelseId);
+
+    ForsendelsesHistorikk retrieveForsendelsesHistorikk(ForsendelsesId forsendelseId);
+
+    ForsendelsesHistorikk retrieveForsendelsesHistorikk(UUID forsendelseId);
 }
