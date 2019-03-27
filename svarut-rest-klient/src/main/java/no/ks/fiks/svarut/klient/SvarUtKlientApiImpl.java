@@ -2,6 +2,7 @@ package no.ks.fiks.svarut.klient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import no.ks.fiks.svarut.klient.exceptions.HttpException;
 import no.ks.fiks.svarut.klient.model.*;
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.Authentication;
@@ -65,10 +66,12 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             final ContentResponse send = request.send();
 
             if (send.getStatus() != 200) {
-                throw new RuntimeException("Send failed " +  send.getStatus() + " : " + send.getContentAsString());
+                throw new HttpException(send.getStatus(), send.getContentAsString());
             } else {
                 return objectMapper.readValue(send.getContentAsString(), ForsendelsesId.class);
             }
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -80,13 +83,14 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
         addAuth(request);
         try {
             final ContentResponse send = request.send();
-            if(send.getStatus() == 404) return null;
-            if(send.getStatus() == 200)
+            if (send.getStatus() == 404) return null;
+            if (send.getStatus() == 200)
                 return objectMapper.readValue(send.getContentAsString(), ForsendelseStatus.class);
             else {
-                log.error("Failed to get status {}: {} ", send.getStatus(), send.getContentAsString());
-                throw new RuntimeException("Error getting status resposne code " + send.getStatus());
+                throw new HttpException(send.getStatus(), send.getContentAsString());
             }
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -99,46 +103,49 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
     }
 
     @Override
-    public ForsendelsesHistorikk retrieveForsendelsesHistorikk(ForsendelsesId forsendelseId){
+    public ForsendelsesHistorikk retrieveForsendelsesHistorikk(ForsendelsesId forsendelseId) {
         return retrieveForsendelsesHistorikk(forsendelseId.getId());
     }
 
     @Override
-    public ForsendelsesHistorikk retrieveForsendelsesHistorikk(UUID forsendelseId){
+    public ForsendelsesHistorikk retrieveForsendelsesHistorikk(UUID forsendelseId) {
         final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelseId + "/historikk");
         addAuth(request);
         try {
             final ContentResponse send = request.send();
-            if(send.getStatus() == 404) return null;
-            if(send.getStatus() == 200)
+            if (send.getStatus() == 404) return null;
+
+            if (send.getStatus() == 200)
                 return objectMapper.readValue(send.getContentAsString(), ForsendelsesHistorikk.class);
             else {
-                log.error("Failed to get historikk {}: {} ", send.getStatus(), send.getContentAsString());
-                throw new RuntimeException("Error getting historikk resposne code " + send.getStatus());
+                throw new HttpException(send.getStatus(), send.getContentAsString());
             }
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public SigneringsHistorikk retrieveSigneringsHistorikk(ForsendelsesId forsendelseId){
+    public SigneringsHistorikk retrieveSigneringsHistorikk(ForsendelsesId forsendelseId) {
         return retrieveSigneringsHistorikk(forsendelseId.getId());
     }
 
     @Override
-    public SigneringsHistorikk retrieveSigneringsHistorikk(UUID forsendelseId){
+    public SigneringsHistorikk retrieveSigneringsHistorikk(UUID forsendelseId) {
         final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelseId + "/signeringhistorikk");
         addAuth(request);
         try {
             final ContentResponse send = request.send();
-            if(send.getStatus() == 404) return null;
-            if(send.getStatus() == 200)
+            if (send.getStatus() == 404) return null;
+            if (send.getStatus() == 200)
                 return objectMapper.readValue(send.getContentAsString(), SigneringsHistorikk.class);
             else {
-                log.error("Failed to get signeringhistorikk {}: {} ", send.getStatus(), send.getContentAsString());
-                throw new RuntimeException("Error getting signeringhistorikk response code " + send.getStatus());
+                throw new HttpException(send.getStatus(), send.getContentAsString());
             }
+        }catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
