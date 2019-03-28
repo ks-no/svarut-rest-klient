@@ -15,7 +15,8 @@ import org.eclipse.jetty.client.util.StringContentProvider;
 import org.eclipse.jetty.http.HttpMethod;
 
 import java.net.URI;
-import java.util.UUID;
+import java.nio.charset.Charset;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -45,6 +46,58 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
         /*AuthenticationStore auth = client.getAuthenticationStore();
         URI uri = URI.create(baseUrl);
         auth.addAuthenticationResult(new BasicAuthentication.BasicResult(uri, username, password));*/
+    }
+
+    @Override
+    @Deprecated
+    public ForsendelsesId startNyForsendelse() {
+        final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/startNyForsendelse");
+        addAuth(request);
+        request.method(HttpMethod.POST);
+        try {
+            final ContentResponse send = request.send();
+            if (send.getStatus() == 404) return null;
+            if (send.getStatus() == 200)
+                return objectMapper.readValue(send.getContentAsString(), ForsendelsesId.class);
+            else {
+                throw new HttpException(send.getStatus(), send.getContentAsString());
+            }
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    @Deprecated
+    public ForsendelsesId sendForsendelseMedId(Forsendelse forsendelse, ForsendelsesId forsendelsesId) {
+        try {
+            MultiPartContentProvider multipart = new MultiPartContentProvider();
+            multipart.addFieldPart("forsendelse", new StringContentProvider(objectMapper.writeValueAsString(forsendelse)), null);
+            for (Dokument dokument : forsendelse.getDokumenter()) {
+                multipart.addFilePart("filer", dokument.getFilnavn(), new InputStreamContentProvider(dokument.getData().getInputStream()), null);
+            }
+
+            multipart.close();
+
+            final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelsesId.uuidAsString() + "/sendForsendelse");
+            addAuth(request);
+            request.content(multipart);
+            request.method(HttpMethod.POST);
+            request.idleTimeout(16, TimeUnit.MINUTES);
+            final ContentResponse send = request.send();
+
+            if (send.getStatus() != 200) {
+                throw new HttpException(send.getStatus(), send.getContentAsString());
+            } else {
+                return objectMapper.readValue(send.getContentAsString(), ForsendelsesId.class);
+            }
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -78,6 +131,10 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
     }
 
     @Override
+    public ForsendelseStatus hentStatus(ForsendelsesId forsendelseId) {
+        return hentStatus(forsendelseId.getId());
+    }
+    @Override
     public ForsendelseStatus hentStatus(UUID forsendelseId) {
         final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelseId + "/status");
         addAuth(request);
@@ -86,6 +143,34 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             if (send.getStatus() == 404) return null;
             if (send.getStatus() == 200)
                 return objectMapper.readValue(send.getContentAsString(), ForsendelseStatus.class);
+            else {
+                throw new HttpException(send.getStatus(), send.getContentAsString());
+            }
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<ForsendelseStatus> hentStatuser(ForsendelsesId... forsendelseId) {
+        return hentStatuser(Arrays.stream(forsendelseId).map(v -> v.getId()).toArray(UUID[]::new));
+    }
+
+    @Override
+    public List<ForsendelseStatus> hentStatuser(UUID... forsendelseId) {
+        final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/statuser");
+        request.method(HttpMethod.POST);
+        addAuth(request);
+        try {
+            final String content = objectMapper.writeValueAsString(forsendelseId);
+
+            request.content(new StringContentProvider("application/json", content, Charset.forName("UTF-8")));
+            final ContentResponse send = request.send();
+            if (send.getStatus() == 404) return null;
+            if (send.getStatus() == 200)
+                return Arrays.asList(objectMapper.readValue(send.getContentAsString(), ForsendelseStatus[].class));
             else {
                 throw new HttpException(send.getStatus(), send.getContentAsString());
             }
@@ -128,6 +213,49 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
     }
 
     @Override
+    public List<DokumentMetadata> retrieveDokumentMetadata(ForsendelsesId forsendelseid){
+        return retrieveDokumentMetadata(forsendelseid.getId());
+    }
+
+    @Override
+    public List<DokumentMetadata> retrieveDokumentMetadata(UUID forsendelseid){
+        final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelseid + "/dokumentMetadata");
+        addAuth(request);
+        try {
+            final ContentResponse send = request.send();
+            if (send.getStatus() == 404) return null;
+            if (send.getStatus() == 200)
+                return Arrays.asList(objectMapper.readValue(send.getContentAsString(), DokumentMetadata[].class));
+            else {
+                throw new HttpException(send.getStatus(), send.getContentAsString());
+            }
+        }catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<ForsendelsesId> retrieveForsendelsesIderByEksternRef(String eksternRef){
+        final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/eksternref/" + eksternRef);
+        addAuth(request);
+        try {
+            final ContentResponse send = request.send();
+            if (send.getStatus() == 404) return null;
+            if (send.getStatus() == 200)
+                return Arrays.asList(objectMapper.readValue(send.getContentAsString(), ForsendelsesId[].class));
+            else {
+                throw new HttpException(send.getStatus(), send.getContentAsString());
+            }
+        }catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public SigneringsHistorikk retrieveSigneringsHistorikk(ForsendelsesId forsendelseId) {
         return retrieveSigneringsHistorikk(forsendelseId.getId());
     }
@@ -144,6 +272,28 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             else {
                 throw new HttpException(send.getStatus(), send.getContentAsString());
             }
+        }catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void setForsendelseLestAvEksterntSystem(LestAv lestAv, ForsendelsesId forsendelseId) {
+        setForsendelseLestAvEksterntSystem(lestAv, forsendelseId.getId());
+    }
+    @Override
+    public void setForsendelseLestAvEksterntSystem(LestAv lestAv, UUID forsendelseId) {
+        final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelseId + "/settLest");
+        request.method(HttpMethod.POST);
+
+        addAuth(request);
+        try {
+            request.content(new StringContentProvider("application/json", objectMapper.writeValueAsString(lestAv), Charset.forName("UTF-8")));
+            final ContentResponse send = request.send();
+            if(send.getStatus()!= 200)
+                throw new HttpException(send.getStatus(), send.getContentAsString());
         }catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {

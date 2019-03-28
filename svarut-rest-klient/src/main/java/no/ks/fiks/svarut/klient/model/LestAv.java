@@ -10,16 +10,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import java.util.Date;
 
-@XmlType
-@XmlAccessorType(XmlAccessType.FIELD)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @SuppressWarnings("checkstyle:hideutilityclassconstructor")
 public class LestAv {
-
-    ForsendelsesId forsendelsesId;
     String lestAvFodselsNummer;
     String navnPaEksterntSystem;
     Date datoLest;

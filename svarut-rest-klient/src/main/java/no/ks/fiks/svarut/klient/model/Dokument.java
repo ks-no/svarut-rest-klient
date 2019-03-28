@@ -1,8 +1,10 @@
 package no.ks.fiks.svarut.klient.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.activation.DataHandler;
 import javax.xml.bind.annotation.XmlElement;
@@ -11,6 +13,8 @@ import java.util.TreeSet;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Dokument {
 
     private String filnavn;
