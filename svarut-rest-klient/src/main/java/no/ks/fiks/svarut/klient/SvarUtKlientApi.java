@@ -10,12 +10,14 @@ public interface SvarUtKlientApi {
     @Deprecated
     /**
      * "Bør bruke sendForsendelse om en ikke absolutt må få iden før en sender forsendelse."
+     * @deprecated
      */
     ForsendelsesId startNyForsendelse();
 
     @Deprecated
     /**
      * "Bør bruke sendForsendelse om en ikke absolutt må få iden før en sender forsendelse."
+     * @deprecated
      */
     ForsendelsesId sendForsendelseMedId(Forsendelse forsendelse, ForsendelsesId forsendelsesId);
 
@@ -25,7 +27,7 @@ public interface SvarUtKlientApi {
      * @param forsendelse
      * @return ForsendelseID
      */
-    public ForsendelsesId sendForsendelse(Forsendelse forsendelse);
+    ForsendelsesId sendForsendelse(Forsendelse forsendelse);
 
     /**
      * Henter status på en forsendelse. Ikke bruk denne i batch jobber. Brukes til å vise status til saksbehandler eller noen som er interesert i å vite hva som skjedde med forsendelsen.
@@ -39,7 +41,7 @@ public interface SvarUtKlientApi {
      * @param forsendelseId
      * @return forsendelseStatus
      */
-    public ForsendelseStatus hentStatus(UUID forsendelseId);
+    ForsendelseStatus hentStatus(UUID forsendelseId);
 
     /**
      * henter flere statuser
