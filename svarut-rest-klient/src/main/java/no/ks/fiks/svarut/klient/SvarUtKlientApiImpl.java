@@ -237,6 +237,26 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
     }
 
     @Override
+    public List<String> forsendelseTyper(){
+        final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/forsendelseTyper");
+        addAuth(request);
+        try {
+            final ContentResponse send = request.send();
+            if (send.getStatus() == 404) return null;
+            if (send.getStatus() == 200)
+                return Arrays.asList(objectMapper.readValue(send.getContentAsString(), String[].class));
+            else {
+                throw new HttpException(send.getStatus(), send.getContentAsString());
+            }
+        }catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @Override
     public List<MottakerForsendelsesTyper> retrieveMottakersystemForOrgnr(String orgnr){
         final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/mottakersystem/" + orgnr);
         addAuth(request);

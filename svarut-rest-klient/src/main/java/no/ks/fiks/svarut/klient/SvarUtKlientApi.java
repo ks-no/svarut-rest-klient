@@ -88,6 +88,12 @@ public interface SvarUtKlientApi {
     List<DokumentMetadata> retrieveDokumentMetadata(UUID forsendelseid);
 
     /**
+     * Henter alle forsendelsetyper
+     * @return ForsendelseTyper
+     */
+    List<String> forsendelseTyper();
+
+    /**
      * Henter mottakersystem som kan hente på dette orgnr
      * @param orgnr
      * @return Liste over alle mottakersystem som henter for dette orgnr
