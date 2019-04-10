@@ -2,6 +2,7 @@
   "definitions": {
     "mottakerForsendelsesTyper": {
       "type": "object",
+      "description": "En gyldig adresse for levering via SvarInn. Med navn på mottakersystem.",
       "properties": {
         "organisasjonsNummer": {
           "type": "string"
@@ -22,5 +23,5 @@
     }
   },
   "$ref": "#/definitions/mottakerForsendelsesTyper",
-"$schema": "http://json-schema.org/draft-07/schema#"
+"$schema": "http://json-schema.org/draft-06/schema#"
 }

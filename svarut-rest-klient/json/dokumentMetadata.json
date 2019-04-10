@@ -18,9 +18,11 @@
           "existingJavaType": "java.lang.Long"
         },
         "sha256hash": {
+          "description": "Sha256 hash av filinnholdet",
           "type": ["string", "null"]
         },
         "dokumentType": {
+          "description": "Noark dokumenttype. M083",
           "type": ["string", "null"]
         },
         "nedlasningsUrl": {
@@ -33,5 +35,5 @@
     }
   },
   "$ref": "#/definitions/dokumentMetadata",
-"$schema": "http://json-schema.org/draft-07/schema#"
+"$schema": "http://json-schema.org/draft-06/schema#"
 }
