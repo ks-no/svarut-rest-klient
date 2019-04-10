@@ -1,0 +1,27 @@
+{
+  "definitions": {
+    "forsendelseStatus": {
+      "type": "object",
+      "properties": {
+        "forsendelsesId": {
+          "$ref": "forsendelse.json#/definitions/forsendelsesId"
+        },
+        "sisteStatusEndring": {
+          "type": ["number","null"],
+          "multipleOf" : 1,
+          "existingJavaType": "java.util.Date"
+        },
+        "status": {
+          "$ref": "#/definitions/status"
+        }
+      }
+    },
+    "status": {
+      "javaType": "no.ks.fiks.svarut.klient.model.Status",
+      "type": "string",
+      "enum": ["MOTTAT", "AKSEPTERT", "AVVIST", "VARSLET", "LEST", "SENDT_PRINT", "PRINTET", "MANUELT_HANDTERT", "SENDT_DIGITALT", "SENDT_SDP", "LEVERT_SDP", "KLAR_FOR_MOTTAK", "IKKE_LEVERT"]
+    }
+  },
+  "$ref": "#/definitions/forsendelseStatus",
+"$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -14,6 +14,7 @@ import org.eclipse.jetty.client.util.MultiPartContentProvider;
 import org.eclipse.jetty.client.util.StringContentProvider;
 import org.eclipse.jetty.http.HttpMethod;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.*;
@@ -43,9 +44,6 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
         this.client = client;
         this.username = username;
         this.password = password;
-        /*AuthenticationStore auth = client.getAuthenticationStore();
-        URI uri = URI.create(baseUrl);
-        auth.addAuthenticationResult(new BasicAuthentication.BasicResult(uri, username, password));*/
     }
 
     @Override
@@ -71,17 +69,17 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
 
     @Override
     @Deprecated
-    public ForsendelsesId sendForsendelseMedId(Forsendelse forsendelse, ForsendelsesId forsendelsesId) {
+    public ForsendelsesId sendForsendelseMedId(Forsendelse forsendelse, ForsendelsesId forsendelsesId, Map<String, InputStream> data) {
         try {
             MultiPartContentProvider multipart = new MultiPartContentProvider();
             multipart.addFieldPart("forsendelse", new StringContentProvider(objectMapper.writeValueAsString(forsendelse)), null);
             for (Dokument dokument : forsendelse.getDokumenter()) {
-                multipart.addFilePart("filer", dokument.getFilnavn(), new InputStreamContentProvider(dokument.getData().getInputStream()), null);
+                multipart.addFilePart("filer", dokument.getFilnavn(), new InputStreamContentProvider(data.get(dokument.getFilnavn())), null);
             }
 
             multipart.close();
 
-            final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelsesId.uuidAsString() + "/sendForsendelse");
+            final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelsesId.getId().toString() + "/sendForsendelse");
             addAuth(request);
             request.content(multipart);
             request.method(HttpMethod.POST);
@@ -101,12 +99,12 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
     }
 
     @Override
-    public ForsendelsesId sendForsendelse(Forsendelse forsendelse) {
+    public ForsendelsesId sendForsendelse(Forsendelse forsendelse, Map<String, InputStream> data) {
         try {
             MultiPartContentProvider multipart = new MultiPartContentProvider();
             multipart.addFieldPart("forsendelse", new StringContentProvider(objectMapper.writeValueAsString(forsendelse)), null);
             for (Dokument dokument : forsendelse.getDokumenter()) {
-                multipart.addFilePart("filer", dokument.getFilnavn(), new InputStreamContentProvider(dokument.getData().getInputStream()), null);
+                multipart.addFilePart("filer", dokument.getFilnavn(), new InputStreamContentProvider(data.get(dokument.getFilnavn())), null);
             }
 
             multipart.close();

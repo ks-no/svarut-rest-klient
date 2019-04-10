@@ -1,0 +1,26 @@
+{
+  "definitions": {
+    "mottakerForsendelsesTyper": {
+      "type": "object",
+      "properties": {
+        "organisasjonsNummer": {
+          "type": "string"
+        },
+        "forsendelsesType": {
+          "type": ["string","null"]
+        },
+        "mottakerSystem": {
+          "type": ["string","null"]
+        },
+        "mottakerId": {
+          "type": "string"
+        },
+        "niva": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "$ref": "#/definitions/mottakerForsendelsesTyper",
+"$schema": "http://json-schema.org/draft-07/schema#"
+}

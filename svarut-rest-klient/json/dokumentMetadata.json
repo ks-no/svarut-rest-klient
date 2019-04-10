@@ -1,0 +1,37 @@
+{
+  "definitions": {
+    "dokumentMetadata": {
+      "type": "object",
+      "properties": {
+        "mimeType": {
+          "type": "string"
+        },
+        "filnavn": {
+          "type": "string"
+        },
+        "kanSigneres": {
+          "type": "boolean"
+        },
+        "sizeInBytes": {
+          "type": ["number","null"],
+          "multipleOf" : 1,
+          "existingJavaType": "java.lang.Long"
+        },
+        "sha256hash": {
+          "type": ["string", "null"]
+        },
+        "dokumentType": {
+          "type": ["string", "null"]
+        },
+        "nedlasningsUrl": {
+          "type": ["string", "null"]
+        },
+        "signeringsUrl": {
+          "type": ["string", "null"]
+        }
+      }
+    }
+  },
+  "$ref": "#/definitions/dokumentMetadata",
+"$schema": "http://json-schema.org/draft-07/schema#"
+}

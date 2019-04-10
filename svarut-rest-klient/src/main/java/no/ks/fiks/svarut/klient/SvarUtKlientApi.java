@@ -2,7 +2,9 @@ package no.ks.fiks.svarut.klient;
 
 import no.ks.fiks.svarut.klient.model.*;
 
+import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface SvarUtKlientApi {
@@ -17,17 +19,21 @@ public interface SvarUtKlientApi {
     @Deprecated
     /**
      * "Bør bruke sendForsendelse om en ikke absolutt må få iden før en sender forsendelse."
+     * @param forsendelse
+     * @param forsenseldesId Id fra StartNyForsendelse.
+     * @param data Map med filnavn, data inputstream
      * @deprecated
      */
-    ForsendelsesId sendForsendelseMedId(Forsendelse forsendelse, ForsendelsesId forsendelsesId);
+    ForsendelsesId sendForsendelseMedId(Forsendelse forsendelse, ForsendelsesId forsendelsesId, Map<String, InputStream> data);
 
     /**
      * Sender forsendelse til SvarUt, kan ta 15min å fullføre denne rest operasjonen. ReadTimeout er satt til 16min, slik at SvarUt Timer ut først.
      * Hvis du får forsendelseid tilbake er alt i orden, da garanterer SvarUt for leveranse. Ingen grunn til å sjekke om den blir levert.
      * @param forsendelse
+     * @param data Map med filnavn, data inputstream
      * @return ForsendelseID
      */
-    ForsendelsesId sendForsendelse(Forsendelse forsendelse);
+    ForsendelsesId sendForsendelse(Forsendelse forsendelse, Map<String, InputStream> data);
 
     /**
      * Henter status på en forsendelse. Ikke bruk denne i batch jobber. Brukes til å vise status til saksbehandler eller noen som er interesert i å vite hva som skjedde med forsendelsen.

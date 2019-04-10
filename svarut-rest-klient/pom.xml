@@ -92,6 +92,34 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.jsonschema2pojo</groupId>
+                <artifactId>jsonschema2pojo-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <includeAdditionalProperties>false</includeAdditionalProperties>
+                    <includeConstructors>true</includeConstructors>
+                    <includeGetters>true</includeGetters>
+                    <includeSetters>true</includeSetters>
+                    <generateBuilders>true</generateBuilders>
+                    <usePrimitives>true</usePrimitives>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>forsendelse</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <sourcePaths>
+                                <sourcePath>${basedir}/json/</sourcePath>
+                            </sourcePaths>
+                            <targetPackage>no.ks.fiks.svarut.klient.model</targetPackage>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>

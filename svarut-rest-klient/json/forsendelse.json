@@ -1,0 +1,304 @@
+{
+  "definitions": {
+    "forsendelse": {
+      "type": "object",
+      "properties": {
+        "mottaker": {
+          "$ref": "#/definitions/adresse"
+        },
+        "eksponertFor": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/digitaladresse"
+          }
+        },
+        "avgivendeSystem": {
+          "type": ["string", "null"]
+        },
+        "tittel": {
+          "type": "string"
+        },
+        "konteringsKode": {
+          "type": ["string", "null"]
+        },
+        "kunDigitalLevering": {
+          "type": ["boolean"]
+        },
+        "kryptert": {
+          "type": ["boolean"]
+        },
+        "utskriftsKonfigurasjon": {
+          "$ref": "#/definitions/utskriftsKonfigurasjon"
+        },
+        "krevNiva4Innlogging": {
+          "type": ["boolean"]
+        },
+        "metadataFraAvleverendeSystem": {
+          "$ref": "#/definitions/noarkMetadataFraAvleverendeSaksSystem"
+        },
+        "metadataForImport": {
+          "$ref": "#/definitions/noarkMetadataForImport"
+        },
+        "svarSendesTil": {
+          "$ref": "#/definitions/adresse"
+        },
+        "svarPaForsendelse": {
+          "$ref": "#/definitions/forsendelsesId"
+        },
+        "dokumenter": {
+          "type": ["array", "null"],
+          "items": {
+            "$ref": "#/definitions/dokument"
+          }
+        },
+        "lenker": {
+          "type": ["array", "null"],
+          "items": {
+            "$ref": "#/definitions/lenke"
+          }
+        },
+        "forsendelsesType": {
+          "type": ["string","null"]
+        },
+        "eksternReferanse": {
+          "type": ["string","null"]
+        },
+        "svarPaForsendelseLink": {
+          "type": ["boolean"]
+        },
+        "signeringUtloper": {
+          "type": ["number","null"],
+          "multipleOf" : 1,
+          "existingJavaType": "java.util.Date"
+        },
+        "signaturType" : {
+          "javaType": "no.ks.fiks.svarut.klient.model.SignaturType",
+          "type": ["string","null"],
+          "enum": [null, "AUTENTISERT_SIGNATUR","AVANSERT_SIGNATUR"]
+        }
+      },
+      "required": [
+        "tittel"
+      ]
+    },
+    "lenke": {
+      "type": "object",
+      "properties": {
+        "urlLenke": {
+          "type": "string"
+        },
+        "urlTekst": {
+          "type": "string"
+        },
+        "ledeTekst": {
+          "type": ["string", "null"]
+        }
+      },
+      "required": ["urlLenke","urlTekst"]
+    },
+    "dokument": {
+      "type": "object",
+      "properties": {
+        "filnavn": {
+          "type": "string"
+        },
+        "mimeType": {
+          "type": "string"
+        },
+        "skalSigneres": {
+          "type": ["boolean"]
+        },
+        "dokumentType": {
+          "type": ["string", "null"]
+        },
+        "giroarkSider": {
+          "type": ["array","null"],
+          "existingJavaType": "java.util.TreeSet",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "ekskluderesFraUtskrift": {
+          "type": ["boolean"]
+        }
+      },
+      "required": ["filnavn", "mimeType"]
+    },
+    "forsendelsesId": {
+      "type": ["object","null"],
+      "properties": {
+        "id": {
+          "existingJavaType":"java.util.UUID",
+          "type": "string",
+          "pattern": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+        }
+      },
+      "required": ["id"]
+    },
+    "adresse": {
+      "type": "object",
+      "properties": {
+        "postAdresse": {
+          "$ref": "#/definitions/postAdresse"
+        },
+        "digitalAdresse": {
+          "$ref": "#/definitions/digitaladresse"
+        }
+      }
+    },
+    "noarkMetadataForImport" : {
+      "type": ["object", "null"],
+      "properties": {
+        "saksSekvensNummer": {
+          "type": ["integer"]
+        },
+        "saksAar": {
+          "type": ["integer"]
+        },
+        "journalPostType": {
+          "type": ["string", "null"]
+        },
+        "journalStatus": {
+          "type": ["string", "null"]
+        },
+        "dokumentetsDato": {
+          "type": ["number","null"],
+          "multipleOf" : 1,
+          "existingJavaType": "java.util.Date"
+        },
+        "tittel": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "noarkMetadataFraAvleverendeSaksSystem": {
+      "type": ["object","null"],
+      "properties": {
+        "saksSekvensNummer": {
+          "type": ["integer"]
+        },
+        "saksAar": {
+          "type": ["integer"]
+        },
+        "journalAar": {
+          "type": ["integer"]
+        },
+        "journalSekvensNummer": {
+          "type": ["integer"]
+        },
+        "journalPostNummer": {
+          "type": ["integer"]
+        },
+        "journalPostType": {
+          "type": ["string", "null"]
+        },
+        "journalStatus": {
+          "type": ["string", "null"]
+        },
+        "journalDato": {
+          "type": ["number","null"],
+          "multipleOf" : 1,
+          "existingJavaType": "java.util.Date"
+        },
+        "dokumentetsDato": {
+          "type": ["number","null"],
+          "multipleOf" : 1,
+          "existingJavaType": "java.util.Date"
+        },
+        "tittel": {
+          "type": ["string", "null"]
+        },
+        "saksBehandler": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ekstraMetadata": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/entry"
+          }
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": ["key","value"]
+    },
+    "utskriftsKonfigurasjon": {
+      "type": "object",
+      "properties": {
+        "utskriftMedFarger": {
+          "type": ["boolean"]
+        },
+        "tosidig": {
+          "type": ["boolean"]
+        }
+      }
+    },
+    "postAdresse": {
+      "type": "object",
+      "properties": {
+        "navn": { "type": "string" },
+        "adresse1": { "type":  ["string", "null"] },
+        "adresse2": { "type":  ["string", "null"] },
+        "adresse3": { "type":  ["string", "null"] },
+        "postNummer": { "type":  ["string", "null"] },
+        "postSted": { "type": "string" },
+        "land": { "type":  ["string", "null"] }
+      },
+      "required": [
+        "navn", "postSted"
+      ]
+    },
+    "digitaladresse": {
+      "type": "object",
+      "properties": {
+        "fodselsNummer": {
+          "type": "string",
+          "minLength": 11,
+          "maxLength": 11
+        },
+        "organisasjonsNummer": {
+          "type": "string",
+          "minLength": 9,
+          "maxLength": 9
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "fodselsNummer"
+          ],
+          "not": {
+            "required": [
+              "organisasjonsNummer"
+            ]
+          }
+        },
+        {
+          "required": [
+            "organisasjonsNummer"
+          ],
+          "not": {
+            "required": [
+              "fodselsNummer"
+            ]
+          }
+        }
+      ]
+
+    }
+  },
+  "$ref": "#/definitions/forsendelse",
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
