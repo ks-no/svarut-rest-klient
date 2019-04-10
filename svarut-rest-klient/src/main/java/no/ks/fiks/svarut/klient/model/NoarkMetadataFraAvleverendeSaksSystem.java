@@ -11,8 +11,6 @@ import javax.xml.bind.annotation.XmlType;
 import java.util.Date;
 import java.util.List;
 
-@XmlType
-@XmlAccessorType(XmlAccessType.FIELD)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
