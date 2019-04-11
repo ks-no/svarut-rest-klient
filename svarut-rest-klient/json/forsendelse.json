@@ -55,7 +55,7 @@
         },
         "svarPaForsendelse": {
           "description": "Dette er svar på en tidligere forsendelse.",
-          "$ref": "#/definitions/forsendelsesId"
+          "$ref": "forsendelseid.json#/definitions/forsendelsesId"
         },
         "dokumenter": {
           "description": "Metadata om dokumentene som skal være med forsendelsen",
@@ -154,17 +154,6 @@
         }
       },
       "required": ["filnavn", "mimeType"]
-    },
-    "forsendelsesId": {
-      "type": ["object","null"],
-      "properties": {
-        "id": {
-          "existingJavaType":"java.util.UUID",
-          "type": "string",
-          "pattern": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
-        }
-      },
-      "required": ["id"]
     },
     "adresse": {
       "type": "object",

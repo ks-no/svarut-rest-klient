@@ -1,5 +1,19 @@
 {
   "definitions": {
+    "mottakerForsendelsesTyperResult": {
+      "type": "object",
+      "properties": {
+        "treff": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/mottakerForsendelsesTyper"
+          }
+        }
+      }
+    },
     "mottakerForsendelsesTyper": {
       "type": "object",
       "description": "En gyldig adresse for levering via SvarInn. Med navn på mottakersystem.",
@@ -22,6 +36,6 @@
       }
     }
   },
-  "$ref": "#/definitions/mottakerForsendelsesTyper",
+  "$ref": "#/definitions/mottakerForsendelsesTyperResult",
 "$schema": "http://json-schema.org/draft-06/schema#"
 }

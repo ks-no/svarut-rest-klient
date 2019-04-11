@@ -1,0 +1,20 @@
+{
+  "definitions": {
+    "forsendelseTyperResult": {
+      "type": "object",
+      "properties": {
+        "forsendelseTyper": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$ref": "#/definitions/forsendelseTyperResult",
+  "$schema": "http://json-schema.org/draft-06/schema#"
+}

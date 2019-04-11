@@ -3,6 +3,7 @@ package no.ks.fiks.svarut.klient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import no.ks.fiks.svarut.klient.exceptions.HttpException;
+import no.ks.fiks.svarut.klient.model.Error;
 import no.ks.fiks.svarut.klient.model.*;
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.Authentication;
@@ -17,7 +18,10 @@ import org.eclipse.jetty.http.HttpMethod;
 import java.io.InputStream;
 import java.net.URI;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -58,7 +62,7 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             if (send.getStatus() == 200)
                 return objectMapper.readValue(send.getContentAsString(), ForsendelsesId.class);
             else {
-                throw new HttpException(send.getStatus(), send.getContentAsString());
+                throw getHttpException(send);
             }
         } catch (RuntimeException e) {
             throw e;
@@ -87,7 +91,7 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             final ContentResponse send = request.send();
 
             if (send.getStatus() != 200) {
-                throw new HttpException(send.getStatus(), send.getContentAsString());
+                throw getHttpException(send);
             } else {
                 return objectMapper.readValue(send.getContentAsString(), ForsendelsesId.class);
             }
@@ -117,7 +121,7 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             final ContentResponse send = request.send();
 
             if (send.getStatus() != 200) {
-                throw new HttpException(send.getStatus(), send.getContentAsString());
+                throw getHttpException(send);
             } else {
                 return objectMapper.readValue(send.getContentAsString(), ForsendelsesId.class);
             }
@@ -142,7 +146,7 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             if (send.getStatus() == 200)
                 return objectMapper.readValue(send.getContentAsString(), ForsendelseStatus.class);
             else {
-                throw new HttpException(send.getStatus(), send.getContentAsString());
+                throw getHttpException(send);
             }
         } catch (RuntimeException e) {
             throw e;
@@ -168,9 +172,9 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             final ContentResponse send = request.send();
             if (send.getStatus() == 404) return null;
             if (send.getStatus() == 200)
-                return Arrays.asList(objectMapper.readValue(send.getContentAsString(), ForsendelseStatus[].class));
+                return objectMapper.readValue(send.getContentAsString(), ForsendelseStatusResult.class).getStatuser();
             else {
-                throw new HttpException(send.getStatus(), send.getContentAsString());
+                throw getHttpException(send);
             }
         } catch (RuntimeException e) {
             throw e;
@@ -201,7 +205,7 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             if (send.getStatus() == 200)
                 return objectMapper.readValue(send.getContentAsString(), ForsendelsesHistorikk.class);
             else {
-                throw new HttpException(send.getStatus(), send.getContentAsString());
+                throw getHttpException(send);
             }
         } catch (RuntimeException e) {
             throw e;
@@ -223,9 +227,9 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             final ContentResponse send = request.send();
             if (send.getStatus() == 404) return null;
             if (send.getStatus() == 200)
-                return Arrays.asList(objectMapper.readValue(send.getContentAsString(), DokumentMetadata[].class));
+                return objectMapper.readValue(send.getContentAsString(), DokumentMetadataResult.class).getDokumentMetadata();
             else {
-                throw new HttpException(send.getStatus(), send.getContentAsString());
+                throw getHttpException(send);
             }
         }catch (RuntimeException e) {
             throw e;
@@ -242,9 +246,9 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             final ContentResponse send = request.send();
             if (send.getStatus() == 404) return null;
             if (send.getStatus() == 200)
-                return Arrays.asList(objectMapper.readValue(send.getContentAsString(), String[].class));
+                return objectMapper.readValue(send.getContentAsString(), ForsendelseTyperResult.class).getForsendelseTyper();
             else {
-                throw new HttpException(send.getStatus(), send.getContentAsString());
+                throw getHttpException(send);
             }
         }catch (RuntimeException e) {
             throw e;
@@ -262,9 +266,9 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             final ContentResponse send = request.send();
             if (send.getStatus() == 404) return null;
             if (send.getStatus() == 200)
-                return Arrays.asList(objectMapper.readValue(send.getContentAsString(), MottakerForsendelsesTyper[].class));
+                return objectMapper.readValue(send.getContentAsString(), MottakerForsendelsesTyperResult.class).getTreff();
             else {
-                throw new HttpException(send.getStatus(), send.getContentAsString());
+                throw getHttpException(send);
             }
         }catch (RuntimeException e) {
             throw e;
@@ -281,9 +285,9 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             final ContentResponse send = request.send();
             if (send.getStatus() == 404) return null;
             if (send.getStatus() == 200)
-                return Arrays.asList(objectMapper.readValue(send.getContentAsString(), ForsendelsesId[].class));
+                return objectMapper.readValue(send.getContentAsString(), ForsendelsesIdResult.class).getForsendelseIder();
             else {
-                throw new HttpException(send.getStatus(), send.getContentAsString());
+                throw getHttpException(send);
             }
         }catch (RuntimeException e) {
             throw e;
@@ -307,12 +311,21 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             if (send.getStatus() == 200)
                 return objectMapper.readValue(send.getContentAsString(), SigneringsHistorikk.class);
             else {
-                throw new HttpException(send.getStatus(), send.getContentAsString());
+                throw getHttpException(send);
             }
         }catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private HttpException getHttpException(ContentResponse send) {
+        try {
+            final Error error = objectMapper.readValue(send.getContentAsString(), Error.class);
+            return new HttpException(send.getStatus(), error.getMessage(), error.getErrorcode());
+        } catch (Exception e) {
+            return new HttpException(send.getStatus(), send.getContentAsString());
         }
     }
 
@@ -330,7 +343,7 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             request.content(new StringContentProvider("application/json", objectMapper.writeValueAsString(lestAv), Charset.forName("UTF-8")));
             final ContentResponse send = request.send();
             if(send.getStatus()!= 200)
-                throw new HttpException(send.getStatus(), send.getContentAsString());
+                throw getHttpException(send);
         }catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {

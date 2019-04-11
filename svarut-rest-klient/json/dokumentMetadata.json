@@ -1,5 +1,19 @@
 {
   "definitions": {
+    "dokumentMetadataResult": {
+      "type": "object",
+      "properties": {
+        "dokumentMetadata": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/dokumentMetadata"
+          }
+        }
+      }
+    },
     "dokumentMetadata": {
       "type": "object",
       "properties": {
@@ -34,6 +48,6 @@
       }
     }
   },
-  "$ref": "#/definitions/dokumentMetadata",
+  "$ref": "#/definitions/dokumentMetadataResult",
 "$schema": "http://json-schema.org/draft-06/schema#"
 }
