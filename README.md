@@ -9,14 +9,6 @@ Legg til maven dependency.
 
   - Java 1.8 or higher
 
-### Installing
-
-##### Manually download JAR 
-Download the following JAR and add it to your classpath:
-
-   * [jsontojava.jar](https://repo1.maven.org/maven2/io/github/sharelison/jsontojava/1.0.0/jsontojava-1.0.0.jar)
-
-
 ##### Maven
 Add dependency no.ks.fiks.svarut:svarut-rest-klient in your POM.
 
