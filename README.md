@@ -1,4 +1,4 @@
-# SvarUt-rest-klient [![Maven Central](https://maven-badges.herokuapp.com/maven-central/no.ks.fiks.svarut/svaurt-rest-klient/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.sharelison/jsontojava)
+# SvarUt-rest-klient [![Maven Central](https://maven-badges.herokuapp.com/maven-central/no.ks.fiks.svarut/svaurt-rest-klient/badge.svg)](https://maven-badges.herokuapp.com/maven-central/no.ks.fiks.svarut/svaurt-rest-klient)
 
 Klient bibliotek mot SvarUt ForsendelseRestService.
 
