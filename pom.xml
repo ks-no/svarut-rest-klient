@@ -30,7 +30,7 @@
     </license>
   </licenses>
   <properties>
-    <mockito-core.version>3.1.1</mockito-core.version>
+    <mockito-core.version>3.2.8</mockito-core.version>
     <lombok.version>1.18.10</lombok.version>
     <changelist>-SNAPSHOT</changelist>
     <spring-boot.version>2.1.2.RELEASE</spring-boot.version>
