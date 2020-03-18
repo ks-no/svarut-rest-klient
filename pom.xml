@@ -14,6 +14,13 @@
   <name>${project.artifactId}</name>
   <description>Parent POM for SvarUt rest klient</description>
   <url>https://github.com/ks-no/svarut-rest-klient</url>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
   <modules>
     <module>svarut-rest-klient</module>
   </modules>
@@ -22,13 +29,6 @@
     <developerConnection>scm:git:git@github.com:ks-no/svarut-rest-klient.git</developerConnection>
     <url>https://github.com/ks-no/svarut-rest-klient</url>
   </scm>
-  <licenses>
-    <license>
-      <name>MIT License</name>
-      <url>http://www.opensource.org/licenses/mit-license.php</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
   <properties>
     <mockito-core.version>3.1.1</mockito-core.version>
     <lombok.version>1.18.10</lombok.version>
@@ -39,7 +39,7 @@
     <commons-io.version>2.6</commons-io.version>
     <hamcrest.version>2.1</hamcrest.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <revision>1.0.0</revision>
+    <revision>1.0.1</revision>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <validation-api.version>2.0.1.Final</validation-api.version>
     <logback-classic.version>1.2.3</logback-classic.version>
@@ -80,8 +80,8 @@
       <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
-	<version>${lombok.version}</version>
-	<scope>provided</scope>
+        <version>${lombok.version}</version>
+        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>javax.validation</groupId>
@@ -140,4 +140,3 @@
     </plugins>
   </build>
 </project>
-
