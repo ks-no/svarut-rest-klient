@@ -74,6 +74,9 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
     @Override
     @Deprecated
     public ForsendelsesId sendForsendelseMedId(Forsendelse forsendelse, ForsendelsesId forsendelsesId, Map<String, InputStream> data) {
+        if(forsendelse == null) throw new IllegalArgumentException("Forsendelse kan ikke være null");
+        validateForNull(forsendelsesId);
+        if(data == null) throw new IllegalArgumentException("Data kan ikke være null");
         try {
             MultiPartContentProvider multipart = new MultiPartContentProvider();
             multipart.addFieldPart("forsendelse", new StringContentProvider(objectMapper.writeValueAsString(forsendelse)), null);
@@ -104,6 +107,8 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
 
     @Override
     public ForsendelsesId sendForsendelse(Forsendelse forsendelse, Map<String, InputStream> data) {
+        if(forsendelse == null) throw new IllegalArgumentException("Forsendelse kan ikke være null");
+        if(data == null) throw new IllegalArgumentException("Data kan ikke være null");
         try {
             MultiPartContentProvider multipart = new MultiPartContentProvider();
             multipart.addFieldPart("forsendelse", new StringContentProvider(objectMapper.writeValueAsString(forsendelse)), null);
@@ -134,10 +139,14 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
 
     @Override
     public ForsendelseStatus hentStatus(ForsendelsesId forsendelseId) {
+        validateForNull(forsendelseId);
+
         return hentStatus(forsendelseId.getId());
     }
     @Override
     public ForsendelseStatus hentStatus(UUID forsendelseId) {
+        validateForNull(forsendelseId);
+
         final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelseId + "/status");
         addAuth(request);
         try {
@@ -157,11 +166,13 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
 
     @Override
     public List<ForsendelseStatus> hentStatuser(ForsendelsesId... forsendelseId) {
+        if(forsendelseId == null || forsendelseId.length == 0 || Arrays.stream(forsendelseId).anyMatch((v) -> v == null || v.getId() == null)) throw new IllegalArgumentException("ForsendelseId kan ikke være null");
         return hentStatuser(Arrays.stream(forsendelseId).map(v -> v.getId()).toArray(UUID[]::new));
     }
 
     @Override
     public List<ForsendelseStatus> hentStatuser(UUID... forsendelseId) {
+        if(forsendelseId == null || forsendelseId.length == 0 || Arrays.stream(forsendelseId).anyMatch((v) -> v == null)) throw new IllegalArgumentException("ForsendelseId kan ikke være null");
         final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/statuser");
         request.method(HttpMethod.POST);
         addAuth(request);
@@ -191,11 +202,13 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
 
     @Override
     public ForsendelsesHistorikk retrieveForsendelsesHistorikk(ForsendelsesId forsendelseId) {
+        validateForNull(forsendelseId);
         return retrieveForsendelsesHistorikk(forsendelseId.getId());
     }
 
     @Override
     public ForsendelsesHistorikk retrieveForsendelsesHistorikk(UUID forsendelseId) {
+        validateForNull(forsendelseId);
         final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelseId + "/historikk");
         addAuth(request);
         try {
@@ -216,11 +229,13 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
 
     @Override
     public List<DokumentMetadata> retrieveDokumentMetadata(ForsendelsesId forsendelseid){
+        validateForNull(forsendelseid);
         return retrieveDokumentMetadata(forsendelseid.getId());
     }
 
     @Override
     public List<DokumentMetadata> retrieveDokumentMetadata(UUID forsendelseid){
+        validateForNull(forsendelseid);
         final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelseid + "/dokumentMetadata");
         addAuth(request);
         try {
@@ -260,6 +275,7 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
 
     @Override
     public List<MottakerForsendelsesTyper> retrieveMottakersystemForOrgnr(String orgnr){
+        if(orgnr == null || orgnr.length() != 9) throw new IllegalArgumentException("Orgnr må være 9 tall");
         final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/mottakersystem/" + orgnr);
         addAuth(request);
         try {
@@ -279,6 +295,7 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
 
     @Override
     public List<ForsendelsesId> retrieveForsendelsesIderByEksternRef(String eksternRef){
+        if(eksternRef == null || eksternRef.length() == 0) throw new IllegalArgumentException("Eksternref kan ikke være null eller tom");
         final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/eksternref/" + eksternRef);
         addAuth(request);
         try {
@@ -298,11 +315,17 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
 
     @Override
     public SigneringsHistorikk retrieveSigneringsHistorikk(ForsendelsesId forsendelseId) {
+        validateForNull(forsendelseId);
         return retrieveSigneringsHistorikk(forsendelseId.getId());
+    }
+
+    private void validateForNull(ForsendelsesId forsendelseId) {
+        if(forsendelseId == null || forsendelseId.getId() == null) throw new IllegalArgumentException("ForsendelseId kan ikke være null");
     }
 
     @Override
     public SigneringsHistorikk retrieveSigneringsHistorikk(UUID forsendelseId) {
+        validateForNull(forsendelseId);
         final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelseId + "/signeringhistorikk");
         addAuth(request);
         try {
@@ -331,10 +354,14 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
 
     @Override
     public void setForsendelseLestAvEksterntSystem(LestAv lestAv, ForsendelsesId forsendelseId) {
+        if(lestAv == null) throw new IllegalArgumentException("Lest av kan ikke være null");
+        validateForNull(forsendelseId);
         setForsendelseLestAvEksterntSystem(lestAv, forsendelseId.getId());
     }
     @Override
     public void setForsendelseLestAvEksterntSystem(LestAv lestAv, UUID forsendelseId) {
+        if(lestAv == null) throw new IllegalArgumentException("Lest av kan ikke være null");
+        validateForNull(forsendelseId);
         final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/" + forsendelseId + "/settLest");
         request.method(HttpMethod.POST);
 
@@ -349,5 +376,9 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void validateForNull(UUID forsendelseId) {
+        if(forsendelseId == null) throw new IllegalArgumentException("ForsendelseId kan ikke være null");
     }
 }
