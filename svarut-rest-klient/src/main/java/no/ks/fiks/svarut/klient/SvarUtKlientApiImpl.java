@@ -18,10 +18,7 @@ import org.eclipse.jetty.http.HttpMethod;
 import java.io.InputStream;
 import java.net.URI;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -97,6 +94,27 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
                 throw getHttpException(send);
             } else {
                 return objectMapper.readValue(send.getContentAsString(), ForsendelsesId.class);
+            }
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void slettForsendelseDokumenter(ForsendelsesId... forsendelseId) {
+        if(forsendelseId == null || forsendelseId.length == 0 || Arrays.stream(forsendelseId).anyMatch(Objects::isNull)) throw new IllegalArgumentException("ForsendelseId kan ikke være null");
+        final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/slettFiler");
+        request.method(HttpMethod.POST);
+        addAuth(request);
+        try {
+            final String content = objectMapper.writeValueAsString(forsendelseId);
+
+            request.content(new StringContentProvider("application/json", content, Charset.forName("UTF-8")));
+            final ContentResponse send = request.send();
+            if (send.getStatus() != 204) {
+                throw getHttpException(send);
             }
         } catch (RuntimeException e) {
             throw e;

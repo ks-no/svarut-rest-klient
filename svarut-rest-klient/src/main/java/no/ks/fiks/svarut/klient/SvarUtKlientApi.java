@@ -27,6 +27,12 @@ public interface SvarUtKlientApi {
     ForsendelsesId sendForsendelseMedId(Forsendelse forsendelse, ForsendelsesId forsendelsesId, Map<String, InputStream> data);
 
     /**
+     * Sletter dokumenter tilknyttet forsendelsen(e)
+     * @param forsendelseId
+     */
+    void slettForsendelseDokumenter(ForsendelsesId... forsendelseId);
+
+    /**
      * Sender forsendelse til SvarUt, kan ta 15min å fullføre denne rest operasjonen. ReadTimeout er satt til 16min, slik at SvarUt Timer ut først.
      * Hvis du får forsendelseid tilbake er alt i orden, da garanterer SvarUt for leveranse. Ingen grunn til å sjekke om den blir levert.
      * @param forsendelse
