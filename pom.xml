@@ -36,7 +36,7 @@
     <hamcrest.version>2.1</hamcrest.version>
     <spring-boot.version>2.1.2.RELEASE</spring-boot.version>
     <revision>1.0.2</revision>
-    <lombok.version>1.18.10</lombok.version>
+    <lombok.version>1.18.16</lombok.version>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <junit-jupiter.version>5.5.0-RC2</junit-jupiter.version>
     <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
