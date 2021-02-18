@@ -38,7 +38,7 @@
     <revision>1.0.2</revision>
     <lombok.version>1.18.18</lombok.version>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <junit-jupiter.version>5.5.0-RC2</junit-jupiter.version>
+    <junit-jupiter.version>5.8.0-M1</junit-jupiter.version>
     <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
     <jetty-client.version>9.4.21.v20190926</jetty-client.version>
     <changelist>-SNAPSHOT</changelist>
