@@ -40,7 +40,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <junit-jupiter.version>5.8.0-M1</junit-jupiter.version>
     <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-    <jetty-client.version>9.4.21.v20190926</jetty-client.version>
+    <jetty-client.version>11.0.1</jetty-client.version>
     <changelist>-SNAPSHOT</changelist>
     <fiks-kryptering.version>1.0.11</fiks-kryptering.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
