@@ -1,16 +1,10 @@
 version: 2
 registries:
-  maven-repository-artifactory-fiks-ks-no-artifactory-maven-all:
+  fiks-artifactory-maven-all:
     type: maven-repository
     url: https://artifactory.fiks.ks.no/artifactory/maven-all
     username: tok-dependabot
-    password: "${{secrets.MAVEN_REPOSITORY_ARTIFACTORY_FIKS_KS_NO_ARTIFACTORY_MAVEN_ALL_PASSWORD}}"
-  maven-repository-artifactory-fiks-ks-no-artifactory-maven-all-sn:
-    type: maven-repository
-    url: https://artifactory.fiks.ks.no/artifactory/maven-all-snapshots
-    username: tok-depdendabot
-    password: "${{secrets.MAVEN_REPOSITORY_ARTIFACTORY_FIKS_KS_NO_ARTIFACTORY_MAVEN_ALL_SN_PASSWORD}}"
-
+    password: ${{secrets.DEPENDABOT}}
 updates:
 - package-ecosystem: maven
   directory: "/"
@@ -49,5 +43,4 @@ updates:
     - 5.7.0
     - 5.7.1
   registries:
-  - maven-repository-artifactory-fiks-ks-no-artifactory-maven-all
-  - maven-repository-artifactory-fiks-ks-no-artifactory-maven-all-sn
+    - fiks-artifactory-maven-all
