@@ -30,14 +30,17 @@
     <url>https://github.com/ks-no/svarut-rest-klient</url>
   </scm>
   <properties>
-    <java.version>1.8</java.version>
+    <java.version>11</java.version>
+    <source.jdk.version>${java.version}</source.jdk.version>
+    <target.jdk.version>${java.version}</target.jdk.version>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
     <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
     <jackson.version>2.12.1</jackson.version>
     <hamcrest.version>2.2</hamcrest.version>
     <spring-boot.version>2.1.2.RELEASE</spring-boot.version>
     <revision>1.0.3</revision>
     <lombok.version>1.18.20</lombok.version>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
     <junit-jupiter.version>5.8.0-M1</junit-jupiter.version>
     <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
     <jetty-client.version>9.4.21.v20190926</jetty-client.version>
