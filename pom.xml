@@ -30,6 +30,7 @@
     <url>https://github.com/ks-no/svarut-rest-klient</url>
   </scm>
   <properties>
+    <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
     <java.version>11</java.version>
     <source.jdk.version>${java.version}</source.jdk.version>
     <target.jdk.version>${java.version}</target.jdk.version>
@@ -130,6 +131,50 @@
   </dependencyManagement>
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>${maven-enforcer-plugin.version}</version>
+        <inherited>true</inherited>
+        <executions>
+          <execution>
+            <id>enforce-maven</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>3.5</version>
+                </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>${java.version}</version>
+                </requireJavaVersion>
+              </rules>
+            </configuration>
+          </execution>
+          <execution>
+            <id>default-cli</id>
+            <configuration>
+              <rules>
+                <requireReleaseVersion/>
+                <requireReleaseDeps />
+              </rules>
+            </configuration>
+          </execution>
+          <execution>
+            <id>validate-snap</id>
+            <configuration>
+              <rules>
+                <requireSnapshotVersion>
+                  <failWhenParentIsRelease>false</failWhenParentIsRelease>
+                </requireSnapshotVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+
+      </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
