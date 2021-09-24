@@ -148,6 +148,13 @@
             "type": "integer"
           }
         },
+        "ekstraMetadata": {
+          "description": "Brukes til andre data som avsender vil ha med i forsendelsen.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/entry"
+          }
+        },
         "ekskluderesFraUtskrift": {
           "description": "Denne filen skal ikke inngå i print. Brukes om du sender andre formater enn pdf som ikke kan eller skal printes.",
           "type": ["boolean"]
