@@ -44,13 +44,6 @@
         },
         "signeringsUrl": {
           "type": ["string", "null"]
-        },
-        "ekstraMetadata": {
-          "description": "Brukes til andre data som avsender vil ha med i forsendelsen.",
-          "type": "array",
-          "items": {
-            "$ref": "./forsendelse.json#/definitions/entry"
-          }
         }
       }
     }
