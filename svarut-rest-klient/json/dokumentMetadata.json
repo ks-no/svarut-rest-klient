@@ -26,6 +26,9 @@
         "kanSigneres": {
           "type": "boolean"
         },
+        "burdeUnntasOffentlighet": {
+          "type": "boolean"
+        },
         "sizeInBytes": {
           "type": ["number","null"],
           "multipleOf" : 1,

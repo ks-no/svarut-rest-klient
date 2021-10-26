@@ -136,6 +136,10 @@
           "description": "Om filen kan signeres",
           "type": ["boolean"]
         },
+        "burdeUnntasOffentlighet": {
+          "description": "Om filen bør unntas offentligheten",
+          "type": ["boolean"]
+        },
         "dokumentType": {
           "description": "Noark dokumenttype. M083",
           "type": ["string", "null"]
