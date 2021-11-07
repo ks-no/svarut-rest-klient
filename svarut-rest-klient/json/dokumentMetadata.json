@@ -26,7 +26,7 @@
         "kanSigneres": {
           "type": "boolean"
         },
-        "burdeUnntasOffentlighet": {
+        "inneholderPersonsensetivInformasjon": {
           "type": "boolean"
         },
         "sizeInBytes": {
