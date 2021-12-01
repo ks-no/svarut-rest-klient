@@ -27,7 +27,7 @@
           "type": "boolean"
         },
         "inneholderPersonsensetivInformasjon": {
-          "type": "boolean"
+          "type": ["boolean", "null"]
         },
         "sizeInBytes": {
           "type": ["number","null"],

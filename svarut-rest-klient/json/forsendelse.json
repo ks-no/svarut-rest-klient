@@ -138,7 +138,7 @@
         },
         "inneholderPersonsensetivInformasjon": {
           "description": "Om filen inneholder personsensetiv informasjon",
-          "type": ["boolean"]
+          "type": ["boolean", "null"]
         },
         "dokumentType": {
           "description": "Noark dokumenttype. M083",
