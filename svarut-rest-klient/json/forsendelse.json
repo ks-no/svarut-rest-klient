@@ -136,6 +136,10 @@
           "description": "Om filen kan signeres",
           "type": ["boolean"]
         },
+        "inneholderPersonsensetivInformasjon": {
+          "description": "Om filen inneholder personsensetiv informasjon",
+          "type": ["boolean", "null"]
+        },
         "dokumentType": {
           "description": "Noark dokumenttype. M083",
           "type": ["string", "null"]
