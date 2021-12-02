@@ -136,8 +136,8 @@
           "description": "Om filen kan signeres",
           "type": ["boolean"]
         },
-        "inneholderPersonsensetivInformasjon": {
-          "description": "Om filen inneholder personsensetiv informasjon",
+        "inneholderPersonsensitivInformasjon": {
+          "description": "Om filen inneholder personsensitiv informasjon",
           "type": ["boolean", "null"]
         },
         "dokumentType": {
