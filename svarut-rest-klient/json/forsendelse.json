@@ -94,6 +94,10 @@
           "javaType": "no.ks.fiks.svarut.klient.model.SignaturType",
           "type": ["string","null"],
           "enum": [null, "AUTENTISERT_SIGNATUR","AVANSERT_SIGNATUR"]
+        },
+        "taushetsbelagtPost": {
+          "description": "Er forsendelsen taushetsbelagt? Dersom denne settes til true vil forsendelsen, om den sendes til Altinn, sendes til tjenesten for taushetsbelagt post.",
+          "type": ["boolean"]
         }
       },
       "required": [
