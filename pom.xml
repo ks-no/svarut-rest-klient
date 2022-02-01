@@ -30,7 +30,7 @@
     <url>https://github.com/ks-no/svarut-rest-klient</url>
   </scm>
   <properties>
-    <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
+    <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
     <java.version>11</java.version>
     <source.jdk.version>${java.version}</source.jdk.version>
     <target.jdk.version>${java.version}</target.jdk.version>
