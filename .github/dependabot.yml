@@ -1,6 +1,6 @@
 version: 2
 registries:
-  fiks-artifactory-maven-all:
+  maven-repository-maven-all:
     type: maven-repository
     url: https://artifactory.fiks.ks.no/artifactory/maven-all
     username: tok-dependabot
@@ -13,34 +13,5 @@ updates:
     time: "03:00"
     timezone: Europe/Oslo
   open-pull-requests-limit: 15
-  ignore:
-  - dependency-name: com.fasterxml.jackson.core:jackson-databind
-    versions:
-    - 2.12.2
-  - dependency-name: com.fasterxml.jackson.core:jackson-annotations
-    versions:
-    - 2.12.2
-  - dependency-name: com.fasterxml.jackson.core:jackson-core
-    versions:
-    - 2.12.2
-  - dependency-name: org.jsonschema2pojo:jsonschema2pojo-maven-plugin
-    versions:
-    - 1.0.2
-    - 1.1.0
-  - dependency-name: org.eclipse.jetty:jetty-client
-    versions:
-    - 11.0.0
-    - 11.0.1
-  - dependency-name: org.mockito:mockito-core
-    versions:
-    - 3.8.0
-  - dependency-name: org.junit.jupiter:junit-jupiter-api
-    versions:
-    - 5.7.0
-    - 5.7.1
-  - dependency-name: org.junit.jupiter:junit-jupiter-engine
-    versions:
-    - 5.7.0
-    - 5.7.1
   registries:
-    - fiks-artifactory-maven-all
+    - maven-repository-maven-all
