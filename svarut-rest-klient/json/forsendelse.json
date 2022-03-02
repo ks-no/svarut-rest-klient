@@ -96,7 +96,7 @@
           "enum": [null, "AUTENTISERT_SIGNATUR","AVANSERT_SIGNATUR"]
         },
         "taushetsbelagtPost": {
-          "description": "Er forsendelsen taushetsbelagt? Dersom denne settes til true vil forsendelsen, om den sendes til Altinn, sendes til tjenesten for taushetsbelagt post.",
+          "description": "Er forsendelsen taushetsbelagt? Dersom denne settes til true vil forsendelsen, om den går til Altinn og mottaker er en organisasjon, sendes til tjenesten for taushetsbelagt post. Les mer om tilgangsstyring for taushetsbelagt post på https://minside.kommune.no/tbp.",
           "type": ["boolean"]
         }
       },
