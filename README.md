@@ -1,4 +1,8 @@
-# SvarUt-rest-klient [![Maven Central](https://maven-badges.herokuapp.com/maven-central/no.ks.fiks.svarut/svarut-rest-klient/badge.svg)](https://maven-badges.herokuapp.com/maven-central/no.ks.fiks.svarut/svarut-rest-klient)
+# SvarUt-rest-klient 
+![GitHub License](https://img.shields.io/github/license/ks-no/svarut-rest-klient)
+[![Maven Central](https://img.shields.io/maven-central/v/no.ks.fiks.svarut/svarut-rest-klient)](https://search.maven.org/artifact/no.ks.fiks.svarut/svarut-rest-klient)
+![GitHub Release Date](https://img.shields.io/github/release-date/ks-no/svarut-rest-klient.svg)
+![GitHub Last Commit](https://img.shields.io/github/last-commit/ks-no/svarut-rest-klient.svg)
 
 Klient bibliotek mot SvarUt ForsendelseRestService.
 
