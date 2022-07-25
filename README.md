@@ -11,7 +11,7 @@ Legg til maven dependency.
 
 ### Prerequisites
 
-  - Java 1.8 or higher
+  - Java 11 or higher
 
 ##### Maven
 Add dependency no.ks.fiks.svarut:svarut-rest-klient in your POM.
