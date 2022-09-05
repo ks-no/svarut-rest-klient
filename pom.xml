@@ -43,7 +43,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <jackson.version>2.13.3</jackson.version>
+        <jackson.version>2.13.4</jackson.version>
         <spring-boot.version>2.1.2.RELEASE</spring-boot.version>
         <lombok.version>1.18.24</lombok.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
