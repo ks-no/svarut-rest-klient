@@ -185,7 +185,8 @@
       "type": ["object", "null"],
       "properties": {
         "saksSekvensNummer": {
-          "type": ["integer"]
+          "type": ["integer"],
+          "existingJavaType": "long"
         },
         "saksAar": {
           "type": ["integer"]
@@ -211,7 +212,8 @@
       "type": ["object","null"],
       "properties": {
         "saksSekvensNummer": {
-          "type": ["integer"]
+          "type": ["integer"],
+          "existingJavaType": "long"
         },
         "saksAar": {
           "type": ["integer"]
@@ -220,10 +222,12 @@
           "type": ["integer"]
         },
         "journalSekvensNummer": {
-          "type": ["integer"]
+          "type": ["integer"],
+          "existingJavaType": "long"
         },
         "journalPostNummer": {
-          "type": ["integer"]
+          "type": ["integer"],
+          "existingJavaType": "long"
         },
         "journalPostType": {
           "type": ["string", "null"]
