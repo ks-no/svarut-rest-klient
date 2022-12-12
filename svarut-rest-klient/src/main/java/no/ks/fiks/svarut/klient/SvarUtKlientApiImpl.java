@@ -14,6 +14,7 @@ import org.eclipse.jetty.client.util.InputStreamContentProvider;
 import org.eclipse.jetty.client.util.MultiPartContentProvider;
 import org.eclipse.jetty.client.util.StringContentProvider;
 import org.eclipse.jetty.http.HttpMethod;
+import org.eclipse.jetty.util.ssl.SslContextFactory;
 
 import java.io.InputStream;
 import java.net.URI;
@@ -24,14 +25,14 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class SvarUtKlientApiImpl implements SvarUtKlientApi {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private String baseUrl;
+    private final String baseUrl;
 
     private final HttpClient client;
     private final String username;
     private final String password;
 
     public SvarUtKlientApiImpl(String baseUrl, String username, String password) {
-        this(baseUrl, new HttpClient(), username, password);
+        this(baseUrl, new HttpClient(new SslContextFactory.Client()), username, password);
         try {
             client.start();
         } catch (Exception e) {
