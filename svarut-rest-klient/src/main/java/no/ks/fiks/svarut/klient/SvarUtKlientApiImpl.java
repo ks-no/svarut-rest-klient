@@ -9,11 +9,13 @@ import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.Authentication;
 import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Request;
+import org.eclipse.jetty.client.dynamic.HttpClientTransportDynamic;
 import org.eclipse.jetty.client.util.BasicAuthentication;
 import org.eclipse.jetty.client.util.InputStreamContentProvider;
 import org.eclipse.jetty.client.util.MultiPartContentProvider;
 import org.eclipse.jetty.client.util.StringContentProvider;
 import org.eclipse.jetty.http.HttpMethod;
+import org.eclipse.jetty.io.ClientConnector;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
 import java.io.InputStream;
@@ -32,7 +34,12 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
     private final String password;
 
     public SvarUtKlientApiImpl(String baseUrl, String username, String password) {
-        this(baseUrl, new HttpClient(new SslContextFactory.Client()), username, password);
+        ClientConnector clientConnector = new ClientConnector();
+        clientConnector.setSslContextFactory(new SslContextFactory.Client());
+        this.baseUrl = baseUrl;
+        this.client = new HttpClient(new HttpClientTransportDynamic(clientConnector));
+        this.username = username;
+        this.password = password;
         try {
             client.start();
         } catch (Exception e) {
