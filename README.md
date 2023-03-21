@@ -4,10 +4,10 @@
 ![GitHub Release Date](https://img.shields.io/github/release-date/ks-no/svarut-rest-klient.svg)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/ks-no/svarut-rest-klient.svg)
 
-Klient bibliotek mot SvarUt ForsendelseRestService.
+Klient bibliotek mot SvarUt ForsendelseRestService. 
 
 ## Getting Started
-Legg til maven dependency.
+Legg til maven dependency. Versjon 1.* bruker jetty-klient 9.*, mens versjon 2.* oppgraderer jetty-klient til versjon 11.*.
 
 ### Prerequisites
 
