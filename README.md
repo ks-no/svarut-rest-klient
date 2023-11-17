@@ -8,11 +8,11 @@ Klient bibliotek mot SvarUt ForsendelseRestService.
 
 ### Prerequisites
 
-| Version | JDK | Jetty |
-|---------|-----|-------|
-| 1.x.x   | 11  | 9     |
-| 2.x.x   | 11  | 11    |
-| 3.x.x   | 17  | 11    |
+| Client version | JDK version | Jetty client version |
+|----------------|-------------|----------------------|
+| 1.x.x          | 11          | 9                    |
+| 2.x.x          | 11          | 11                   |
+| 3.x.x          | 17          | 11                   |
 
 ##### Maven
 Add dependency no.ks.fiks.svarut:svarut-rest-klient in your POM.
