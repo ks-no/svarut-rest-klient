@@ -6,12 +6,13 @@
 
 Klient bibliotek mot SvarUt ForsendelseRestService. 
 
-## Getting Started
-Legg til maven dependency. Versjon 1.* bruker jetty-klient 9.*, mens versjon 2.* oppgraderer jetty-klient til versjon 11.*.
-
 ### Prerequisites
 
-  - Java 11 or higher
+| Version | JDK | Jetty |
+|---------|-----|-------|
+| 1.x.x   | 11  | 9     |
+| 2.x.x   | 11  | 11    |
+| 3.x.x   | 17  | 11    |
 
 ##### Maven
 Add dependency no.ks.fiks.svarut:svarut-rest-klient in your POM.
@@ -20,7 +21,7 @@ Add dependency no.ks.fiks.svarut:svarut-rest-klient in your POM.
        <dependency>
             <groupId>no.ks.fiks.svarut</groupId>
             <artifactId>svarut-rest-klient</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>x.x.x</version>
        </dependency>
     </dependencies>
 
