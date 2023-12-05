@@ -13,6 +13,7 @@ Klient bibliotek mot SvarUt ForsendelseRestService.
 | 1.x.x          | 11          | 9                    |
 | 2.x.x          | 11          | 11                   |
 | 3.x.x          | 17          | 11                   |
+| 4.x.x          | 17          | 12                   |
 
 ##### Maven
 Add dependency no.ks.fiks.svarut:svarut-rest-klient in your POM.
