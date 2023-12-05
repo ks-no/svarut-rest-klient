@@ -405,7 +405,10 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
                     FORSENDELSE_PART,
                     null,
                     null,
-                    new StringRequestContent(objectMapper.writeValueAsString(forsendelse))
+                    new StringRequestContent(
+                            "application/json",
+                            objectMapper.writeValueAsString(forsendelse)
+                    )
             );
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Feil under serialisering av forsendelse-metadata", e);
@@ -425,8 +428,7 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
         try {
             return new StringRequestContent(
                     "application/json",
-                    objectMapper.writeValueAsString(toBeSerialized),
-                    StandardCharsets.UTF_8
+                    objectMapper.writeValueAsString(toBeSerialized)
             );
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Feil under serialisering av objekt", e);
