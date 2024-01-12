@@ -4,6 +4,8 @@
 ![GitHub Release Date](https://img.shields.io/github/release-date/ks-no/svarut-rest-klient.svg)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/ks-no/svarut-rest-klient.svg)
 
+### Denne klienten fungerer kun mot versjon 1 av REST-APIet. For nyere versjoner, se https://github.com/ks-no/fiks-svarut-klient
+
 Klient bibliotek mot SvarUt ForsendelseRestService. 
 
 ### Prerequisites
