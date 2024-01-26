@@ -15,7 +15,6 @@ import org.eclipse.jetty.util.ssl.SslContextFactory;
 
 import java.io.InputStream;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -270,6 +269,46 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
             if (send.getStatus() == 200)
                 return objectMapper.readValue(send.getContentAsString(), ForsendelseTyperResult.class).getForsendelseTyper();
             else {
+                throw getHttpException(send);
+            }
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<MottakerForsendelsesTyper> retrieveMottakersystem(String orgnr, String forsendelseType, Integer niva) {
+        final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/mottakersystem/");
+
+        if (orgnr != null) {
+            if (!orgnr.matches("^[0-9]{9}$")) {
+                throw new IllegalArgumentException("Orgnr må bestå av nøyaktig ni tall: " + orgnr);
+            }
+            request.param("organisasjonsNummer", orgnr);
+        }
+
+        if (forsendelseType != null) {
+            if (!forsendelseType.matches("^[a-zA-ZæøåÆØÅ0-9]+(\\.[a-zA-ZæøåÆØÅ0-9]+)*$")) {
+                throw new IllegalArgumentException("Forsendelsestype har ugyldig format: " + forsendelseType);
+            }
+            request.param("forsendelsesType", forsendelseType);
+        }
+
+        if (niva != null) {
+            if (niva != 3 && niva != 4) {
+                throw new IllegalArgumentException("Ugyldig nivå: " + niva);
+            }
+            request.param("niva", String.valueOf(niva));
+        }
+
+        addAuth(request);
+        try {
+            final ContentResponse send = request.send();
+            if (send.getStatus() == 200) {
+                return objectMapper.readValue(send.getContentAsString(), MottakerForsendelsesTyperResult.class).getTreff();
+            } else {
                 throw getHttpException(send);
             }
         } catch (RuntimeException e) {
