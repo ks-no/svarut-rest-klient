@@ -280,7 +280,7 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
 
     @Override
     public List<MottakerForsendelsesTyper> retrieveMottakersystem(String orgnr, String forsendelseType, Integer niva) {
-        final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/mottakersystem/");
+        final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/mottakersystem");
 
         if (orgnr != null) {
             if (!orgnr.matches("^[0-9]{9}$")) {
