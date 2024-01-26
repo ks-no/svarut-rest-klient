@@ -279,21 +279,21 @@ public class SvarUtKlientApiImpl implements SvarUtKlientApi {
     }
 
     @Override
-    public List<MottakerForsendelsesTyper> retrieveMottakersystem(String orgnr, String forsendelseType, Integer niva) {
+    public List<MottakerForsendelsesTyper> retrieveMottakersystem(String organisasjonsNummer, String forsendelsesType, Integer niva) {
         final Request request = client.newRequest(baseUrl + "/tjenester/api/forsendelse/v1/mottakersystem");
 
-        if (orgnr != null) {
-            if (!orgnr.matches("^[0-9]{9}$")) {
-                throw new IllegalArgumentException("Orgnr må bestå av nøyaktig ni tall: " + orgnr);
+        if (organisasjonsNummer != null) {
+            if (!organisasjonsNummer.matches("^[0-9]{9}$")) {
+                throw new IllegalArgumentException("Orgnr må bestå av nøyaktig ni tall: " + organisasjonsNummer);
             }
-            request.param("organisasjonsNummer", orgnr);
+            request.param("organisasjonsNummer", organisasjonsNummer);
         }
 
-        if (forsendelseType != null) {
-            if (!forsendelseType.matches("^[a-zA-ZæøåÆØÅ0-9]+(\\.[a-zA-ZæøåÆØÅ0-9]+)*$")) {
-                throw new IllegalArgumentException("Forsendelsestype har ugyldig format: " + forsendelseType);
+        if (forsendelsesType != null) {
+            if (!forsendelsesType.matches("^[a-zA-ZæøåÆØÅ0-9]+(\\.[a-zA-ZæøåÆØÅ0-9]+)*$")) {
+                throw new IllegalArgumentException("Forsendelsestype har ugyldig format: " + forsendelsesType);
             }
-            request.param("forsendelsesType", forsendelseType);
+            request.param("forsendelsesType", forsendelsesType);
         }
 
         if (niva != null) {
