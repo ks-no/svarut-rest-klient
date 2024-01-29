@@ -106,6 +106,15 @@ public interface SvarUtKlientApi {
     List<String> forsendelseTyper();
 
     /**
+     * Henter mottakersystem med mulighet for å filtrere på organisasjonsnummer, forsendelsestype og nivå.
+     * @param orgnr
+     * @param forsendelseType
+     * @param niva
+     * @return Liste over mottakersystem med spesifiserte filtere
+     */
+    List<MottakerForsendelsesTyper> retrieveMottakersystem(String orgnr, String forsendelseType, Integer niva);
+
+    /**
      * Henter mottakersystem som kan hente på dette orgnr
      * @param orgnr
      * @return Liste over alle mottakersystem som henter for dette orgnr
