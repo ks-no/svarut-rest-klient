@@ -53,7 +53,7 @@
         <commons-io.version>2.16.1</commons-io.version>
 
         <junit-jupiter.version>5.10.2</junit-jupiter.version>
-        <hamcrest.version>2.2</hamcrest.version>
+        <hamcrest.version>3.0</hamcrest.version>
         <mockito-core.version>5.11.0</mockito-core.version>
 
         <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
