@@ -51,7 +51,7 @@
         <fiks-maskinporten-client.version>1.0.8</fiks-maskinporten-client.version>
         <commons-io.version>2.19.0</commons-io.version>
 
-        <junit-jupiter.version>5.13.2</junit-jupiter.version>
+        <junit-jupiter.version>5.13.4</junit-jupiter.version>
         <hamcrest.version>3.0</hamcrest.version>
         <mockito-core.version>5.18.0</mockito-core.version>
     </properties>
