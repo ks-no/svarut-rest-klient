@@ -6,4 +6,9 @@ updates:
     interval: daily
     time: "05:55"
     timezone: Europe/Oslo
+  groups:
+    patch-minor-deps:
+      update-types:
+        - "minor"
+        - "patch"
   open-pull-requests-limit: 15
